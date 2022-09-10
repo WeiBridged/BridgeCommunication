@@ -14,7 +14,19 @@ Backend scripts to help contracts read and write to each other on different bloc
 
 :warning: 5. User is removed from the queue :warning:
 
-:warning: Ideally we remove the user from the queue like the mock Chainlink Keepers example to prevent potenetial reentrancy attacks. If we had CCIP, we would be able to easily call between different contracts on different blockchains to have the same contract format. We protect against this by having the transfer unlock with "msg.sender != Owner" check. :warning:
+:warning: 
+
+Ideally we remove the user from the queue like the mock Chainlink Keepers example to prevent potenetial reentrancy attacks. 
+
+If we had CCIP, we would be able to easily call between different contracts on different blockchains to have the same contract format.
+
+We protect against this checking
+
+        msg.sender != Owner
+        
+which would revert the unlock function call. 
+
+:warning:
 
 ## GoerliBridgeToOptimism
 
