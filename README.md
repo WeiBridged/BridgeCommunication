@@ -2,4 +2,9 @@
 
 Backend scripts to help contracts read and write to each other on different blockchains.
 
-Will be written in either Golang, Python or Javascript (node.js). 
+## Status
+
+Able to add and remove liqudity from Goerli to Optimism bridge:
+
+        cd scripts
+        go run contractReadWrite.go GoerliBridge.go
