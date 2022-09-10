@@ -10,7 +10,7 @@ Backend scripts to help contracts read and write to each other on different bloc
 
 3. After deposit is made, user is added to the user bridge queue
 
-4. Owner detects the queue is not empty, then transfers the 1000 wei to the user
+4. Owner detects the queue is not empty, then transfers the added wei [ETH] (or another token) to the user
 
 5. User is removed from the queue :warning: Ideally we remove the user from the queue like the mock Chainlink Keepers example to prevent potenetial reentrancy attacks. If we had CCIP we would be able to easily call between different contracts in contract calls to have the same contract format. We protect against this by having the transfer unlock with "msg.sender != Owner" check. :warning:
 
