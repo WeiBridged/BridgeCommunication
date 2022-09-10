@@ -72,25 +72,13 @@ func main() {
           log.Fatal(err)
       }
 
-      // auth := bind.NewKeyedTransactor(privateKey)
-      // auth.Nonce = big.NewInt(int64(nonce))
-      // auth.GasLimit = uint64(300000) // in units
-      // auth.GasPrice = gasPrice
-      // auth.Value = big.NewInt(1000)     // in wei
-      //
-      // tx, err := contract.OwnerAddBridgeLiqudity(auth)
-      // if err != nil {
-      //     log.Fatal(err)
-      // }
-      // fmt.Println("Tx hash:", tx.Hash().Hex()) // tx sent
-
-
       auth := bind.NewKeyedTransactor(privateKey)
       auth.Nonce = big.NewInt(int64(nonce))
       auth.GasLimit = uint64(300000) // in units
       auth.GasPrice = gasPrice
+      auth.Value = big.NewInt(1000)     // in wei
 
-      tx, err := contract.OwnerRemoveBridgeLiqudity(auth)
+      tx, err := contract.OwnerAddBridgeLiqudity(auth)
       if err != nil {
           log.Fatal(err)
       }

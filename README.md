@@ -2,9 +2,14 @@
 
 Backend scripts to help contracts read and write to each other on different blockchains.
 
-## Status
+## GoerliBridgeToOptimism
 
-Able to add and remove liqudity from Goerli to Optimism bridge:
+        cd GoerliBridgeToOptimism
 
-        cd scripts
-        go run contractReadWrite.go GoerliBridge.go
+### Owner Deposit
+
+        go run ownerDeposit1000wei.go GoerliBridge.go
+
+### Owner Withdraw
+
+        go run ownerWithdraw1000wei.go GoerliBridge.go
