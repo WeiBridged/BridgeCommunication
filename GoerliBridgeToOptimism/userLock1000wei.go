@@ -14,6 +14,7 @@ import (
     "math/big"
 
     goerliBridge "testProject/contracts/GoerliBridge"
+    // optimismBridge "testProject/contracts/OptimismBridge"
 
     "github.com/ethereum/go-ethereum/accounts/abi/bind"
     "github.com/ethereum/go-ethereum/common"
@@ -39,6 +40,29 @@ func main() {
 
   Owner := getOwner(contract)
   fmt.Println("Owner:", Owner)
+
+
+
+
+  clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("optimismAlchemyWSS"))
+  fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
+
+  contractAddressCrossChain := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
+  // contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
+
+
+  ContractBridgeTokens, err := clientCrossChain.BalanceAt(context.Background(), contractAddressCrossChain, nil)
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+
+  BigInt0 := big.NewInt(0)
+  if  ContractBridgeTokens.Cmp(BigInt0) == 0 {
+    log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT!!")
+  }
+
 
   // CHECK THE OTHER CHAIN CONTRACT TO SEE IF THE OTHER SIDE HAS ENOUGH TOKENS TO BRIDGE!!!!!!!
 

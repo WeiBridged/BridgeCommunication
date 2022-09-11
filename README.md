@@ -43,11 +43,15 @@ which would revert the unlock function call .
 
         go run ownerDeposit1000wei.go
 
-### User Lock Goerli :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
+### User Lock Goerli
 
         go run userLock1000wei.go
 
 ### Owner Unlock Optimism
+
+:red_circle: ADD BLOCK LISTENER TO SEE IF QUEUE IS EMPTY :red_circle:
+
+:red_circle: REWRITE CONTRACT SO THAT IT ONLY SENDS 1000 WEI PER QUEUE TO AVOID ISSUE WITH BALANCE AND QUEUE BEING OUT OF SYNC :red_circle:
 
         go run ownerUnlock1000wei.go
 
