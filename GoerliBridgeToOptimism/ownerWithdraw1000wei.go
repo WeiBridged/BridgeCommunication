@@ -13,6 +13,7 @@ import (
     "crypto/ecdsa"
     "math/big"
 
+    goerliBridge "testProject/contracts/GoerliBridge"
     optimismBridge "testProject/contracts/OptimismBridge"
 
     "github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -29,10 +30,10 @@ func main() {
   // Use this endpoint when you are running your own node on a specific chain (events allowed)
   // client, chainID := clientSetup(os.Getenv("ws://localhost/8546"))
 
-  client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
+  client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractAddress := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -40,7 +41,33 @@ func main() {
   Owner := getOwner(contract)
   fmt.Println("storedData:", Owner)
 
+  clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
+  fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
+  contractAddressCrossChain := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
+
+  First := getFirst(contractCrossChain)
+  fmt.Println("First:", First)
+
+  Last := getLast(contractCrossChain)
+  fmt.Println("Last:", Last)
+
+  if Last.Cmp(First) > -1 {
+    log.Fatal("QUEUE IS NOT EMPTY!")
+  }
+
+  ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+
+  BigInt0 := big.NewInt(0)
+  if  ContractBridgeTokens.Cmp(BigInt0) == 0 {
+    log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT!!")
+  }
 
   // CHECK THE OTHER CHAIN CONTRACT TO SEE IF QUEUE IS EMPTY!!!
 
@@ -127,4 +154,57 @@ func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOp
   }
   fmt.Println("Tx hash:", tx.Hash().Hex()) // tx sent
   return
+}
+
+func getFirst(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
+
+  storedData, err := contract.First(&bind.CallOpts{})
+  if err != nil {
+        log.Fatal(err)
+  }
+  return
+
+}
+
+func getLast(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
+
+  storedData, err := contract.Last(&bind.CallOpts{})
+  if err != nil {
+        log.Fatal(err)
+  }
+  return
+
+}
+
+func connectContractAddressCrossChain(client *ethclient.Client, contractAddress common.Address) (contract *goerliBridge.GoerliBridge) {
+
+  contract, err := goerliBridge.NewGoerliBridge(contractAddress, client)
+  if err != nil {
+      log.Fatal(err)
+  }
+  return
+}
+
+func connectWalletCrossChain(privateKeyString string, client *ethclient.Client, chainID *big.Int) (auth *bind.TransactOpts, fromAddress common.Address) {
+
+   privateKey, err := crypto.HexToECDSA(privateKeyString)
+   if err != nil {
+       log.Fatal(err)
+   }
+
+   publicKey := privateKey.Public()
+   publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
+   if !ok {
+       log.Fatal("error casting public key to ECDSA")
+   }
+
+   fromAddress = crypto.PubkeyToAddress(*publicKeyECDSA)
+
+   auth, err = bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+   if err != nil {
+       log.Fatal(err)
+   }
+
+   return
+
 }

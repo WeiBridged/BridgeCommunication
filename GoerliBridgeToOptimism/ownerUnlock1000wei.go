@@ -62,9 +62,6 @@ func main() {
     log.Fatal("QUEUE IS EMPTY!")
   }
 
-
-
-
   UserInQueue := getUserInQueue(Last,contractCrossChain)
   fmt.Println("UserInQueue:", UserInQueue)
 
@@ -79,7 +76,11 @@ func main() {
   //   log.Fatal("USER GIVEN ALL BRIDGE FUNDS ALREADY!")
   // }
 
+
+  //1000 wei at a time to keep the queue balanced.
   UserTokensToPay := big.NewInt(0).Sub(UserLockedTokens, UserBridgedTokens)
+  // UserTokensToPay := big.NewInt(1000)
+
   fmt.Println("UserTokensToPay:", UserTokensToPay)
 
   ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
@@ -92,9 +93,6 @@ func main() {
   if  ContractBridgeTokens.Cmp(UserTokensToPay) == -1 {
     log.Fatal("BRIDGE DOES NOT HAVE ENOUGH FUNDS TO BRIDGE USER!")
   }
-
-
-
 
   DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
 
