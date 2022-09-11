@@ -58,9 +58,23 @@ func main() {
 
   fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
 
-  BigInt0 := big.NewInt(0)
-  if  ContractBridgeTokens.Cmp(BigInt0) == 0 {
-    log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT!!")
+  First := getFirst(contract)
+  fmt.Println("First:", First)
+
+  Last := getLast(contract)
+  fmt.Println("Last:", Last)
+
+  bufferLast := big.NewInt(0).Add(Last, big.NewInt(1))
+  newUserInQueue := big.NewInt(0).Add(bufferLast, big.NewInt(1))
+  getNewQueueSize := big.NewInt(0).Sub(newUserInQueue, First)
+  contractBalanceForNewQueue := big.NewInt(0).Mul(getNewQueueSize, big.NewInt(1000))
+
+  // ((Last+1)-First))*1000 >= contractbalance
+  fmt.Println("CONTRACT MUST HAVE THIS BALANCE FOR NEW QUEUE:", contractBalanceForNewQueue)
+
+  // BigInt0 := big.NewInt(0)
+  if  ContractBridgeTokens.Cmp(contractBalanceForNewQueue) == -1 {
+    log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT FOR NEXT USER IN QUEUE!!")
   }
 
 
@@ -152,4 +166,34 @@ func LockTokensForOptimismTx(client *ethclient.Client, auth *bind.TransactOpts, 
   fmt.Println("Tx hash:", tx.Hash().Hex()) // tx sent
 
   return
+}
+
+
+func connectContractAddressCrossChain(client *ethclient.Client, contractAddress common.Address) (contract *goerliBridge.GoerliBridge) {
+
+  contract, err := goerliBridge.NewGoerliBridge(contractAddress, client)
+  if err != nil {
+      log.Fatal(err)
+  }
+  return
+}
+
+func getFirst(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
+
+  storedData, err := contract.First(&bind.CallOpts{})
+  if err != nil {
+        log.Fatal(err)
+  }
+  return
+
+}
+
+func getLast(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
+
+  storedData, err := contract.Last(&bind.CallOpts{})
+  if err != nil {
+        log.Fatal(err)
+  }
+  return
+
 }
