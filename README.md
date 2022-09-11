@@ -43,6 +43,14 @@ which would revert the unlock function call .
 
         go run ownerDeposit1000wei.go GoerliBridge.go
 
-### Owner Withdraw
+### Owner Withdraw :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
 
         go run ownerWithdraw1000wei.go GoerliBridge.go
+
+### User Lock Goerli :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
+
+        go run userLock1000wei.go GoerliBridge.go
+
+### Owner Unlock Optimism :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
+
+        go run ownerUnlock1000wei.go GoerliBridge.go

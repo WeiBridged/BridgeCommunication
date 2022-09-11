@@ -42,15 +42,15 @@ func main() {
 
   // CHECK THE OTHER CHAIN CONTRACT TO SEE IF QUEUE IS EMPTY!!!
 
-  queueAddress := "0x66C1d8A5ee726b545576A75380391835F8AAA43c"
+  queueAddress := common.HexToAddress("0x66C1d8A5ee726b545576A75380391835F8AAA43c")
 
-  //LOAD USER LOCKED AMOUNT FROM OTHER CONTRACT!!!!
+  //DEQUEUE THE OTHER CONTRACT AFTER UNLOCKING TOKENS! WE CAN
 
-  //DEQUEUE THE OTHER CONTRACT AFTER UNLOCKING TOKENS!
+  //LOAD USER LOCKED AMOUNT FROM OTHER CONTRACT WITH LOCALLY STORED VALUE!!!!
 
-  queueAmount := "1000"
+  queueAmount := big.NewInt(1000)
 
-  ownerUnlockGoerliETH(client,auth,fromAddress,contract);
+  OwnerUnlockGoerliETHTx(queueAddress,queueAmount,client,auth,fromAddress,contract);
 
 }
 
@@ -111,7 +111,7 @@ func getOwner(contract *Main) (storedData common.Address) {
 
 }
 
-func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
+func OwnerUnlockGoerliETHTx(queuAddress common.Address , queueAmount *big.Int , client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -127,7 +127,7 @@ func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOp
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
 
-  tx, err := contract.OwnerRemoveBridgeLiqudity(auth)
+  tx, err := contract.OwnerUnlockGoerliETH(auth,queuAddress,queueAmount)
   if err != nil {
       log.Fatal(err)
   }
