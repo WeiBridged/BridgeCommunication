@@ -47,7 +47,7 @@ which would revert the unlock function call .
 
         go run userLock1000wei.go
 
-### Owner Unlock Optimism :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
+### Owner Unlock Optimism 
 
         go run ownerUnlock1000wei.go
 
