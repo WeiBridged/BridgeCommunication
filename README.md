@@ -10,27 +10,34 @@ Backend scripts to help contracts read and write to each other on different bloc
 
 3. After deposit is made, user is added to the user bridge queue
 
-4. Owner detects user in queue, then transfers the added wei [ETH] (or another token) to the user
+4. Owner detects user in queue
 
-:warning: 5. User is removed from the queue :warning:
+5. Locally store user in queue with Golang variable  :warning: Assume bridge will not go down with the stored address removed from queue. :warning:
 
-:warning: 
+6. Dequeue to remove user from the queue.
 
-Ideally we remove the user from the queue like the mock Chainlink Keepers example to prevent potenetial reentrancy attacks. 
+7. Unlock the added wei [ETH] (or another token) to the user locally stored, then remove user locally.
+
+:warning:
+
+We remove the user locally between chains before the contract sends funds follow a "change state =>" then transfer pattern to prevent reentrancy attacks.
+
+Ideally we remove the user from the queue like the mock Chainlink Keepers for simplicity.
 
 If we had CCIP, we would be able to easily call between different contracts on different blockchains to have the same contract format.
 
-We protect against this checking
+For extra unlock security, the contract has
 
         msg.sender != Owner
-        
-which would revert the unlock function call. 
+
+which would revert the unlock function call .
 
 :warning:
 
 ## GoerliBridgeToOptimism
 
         cd GoerliBridgeToOptimism
+        gvm use go1.1sss7
 
 ### Owner Deposit
 

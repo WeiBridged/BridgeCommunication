@@ -33,16 +33,14 @@ func main() {
   contractAddress := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
   contract := connectContractAddress(client,contractAddress)
 
-  auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
+  auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKeyTwo"),client,chainID)
 
   Owner := getOwner(contract)
-  fmt.Println("storedData:", Owner)
+  fmt.Println("Owner:", Owner)
 
+  // CHECK THE OTHER CHAIN CONTRACT TO SEE IF THE OTHER SIDE HAS ENOUGH TOKENS TO BRIDGE!!!!!!!
 
-
-  // CHECK THE OTHER CHAIN CONTRACT TO SEE IF QUEUE IS EMPTY!!!
-
-  OwnerRemoveBridgeLiqudityTx(client,auth,fromAddress,contract);
+  LockTokensForOptimismTx(client,auth,fromAddress,contract);
 
 }
 
@@ -103,7 +101,7 @@ func getOwner(contract *Main) (storedData common.Address) {
 
 }
 
-func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
+func LockTokensForOptimismTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -118,11 +116,14 @@ func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOp
   auth.Nonce = big.NewInt(int64(nonce))
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
+  auth.Value = big.NewInt(1003)     // in wei
 
-  tx, err := contract.OwnerRemoveBridgeLiqudity(auth)
+  amountBridge := big.NewInt(1000)
+  tx, err := contract.LockTokensForOptimism(auth,amountBridge)
   if err != nil {
       log.Fatal(err)
   }
   fmt.Println("Tx hash:", tx.Hash().Hex()) // tx sent
+
   return
 }

@@ -42,7 +42,15 @@ func main() {
 
   // CHECK THE OTHER CHAIN CONTRACT TO SEE IF QUEUE IS EMPTY!!!
 
-  OwnerRemoveBridgeLiqudityTx(client,auth,fromAddress,contract);
+  queueAddress := "0x66C1d8A5ee726b545576A75380391835F8AAA43c"
+
+  //LOAD USER LOCKED AMOUNT FROM OTHER CONTRACT!!!!
+
+  //DEQUEUE THE OTHER CONTRACT AFTER UNLOCKING TOKENS!
+
+  queueAmount := "1000"
+
+  ownerUnlockGoerliETH(client,auth,fromAddress,contract);
 
 }
 
