@@ -13,6 +13,8 @@ import (
     "crypto/ecdsa"
     "math/big"
 
+    optimismBridge "testProject/contracts/OptimismBridge"
+
     "github.com/ethereum/go-ethereum/accounts/abi/bind"
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/ethclient"
@@ -60,9 +62,9 @@ func clientSetup(wssConnectionURL string) (client *ethclient.Client, chainID *bi
   return
 }
 
-func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *Main) {
+func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *optimismBridge.OptimismBridge) {
 
-  contract, err := NewMain(contractAddress, client)
+  contract, err := optimismBridge.NewOptimismBridge(contractAddress, client)
   if err != nil {
       log.Fatal(err)
   }
@@ -93,7 +95,7 @@ func connectWallet(privateKeyString string, client *ethclient.Client, chainID *b
 
 }
 
-func getOwner(contract *Main) (storedData common.Address) {
+func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Address) {
 
   storedData, err := contract.Owner(&bind.CallOpts{})
   if err != nil {
@@ -103,7 +105,7 @@ func getOwner(contract *Main) (storedData common.Address) {
 
 }
 
-func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
+func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {

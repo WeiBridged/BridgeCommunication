@@ -13,6 +13,8 @@ import (
     "crypto/ecdsa"
     "math/big"
 
+    optimismBridge "testProject/contracts/OptimismBridge"
+
     "github.com/ethereum/go-ethereum/accounts/abi/bind"
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/ethclient"
@@ -27,10 +29,10 @@ func main() {
   // Use this endpoint when you are running your own node on a specific chain (events allowed)
   // client, chainID := clientSetup(os.Getenv("ws://localhost/8546"))
 
-  client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
+  client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractAddress := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -56,9 +58,9 @@ func clientSetup(wssConnectionURL string) (client *ethclient.Client, chainID *bi
   return
 }
 
-func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *Main) {
+func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *optimismBridge.OptimismBridge) {
 
-  contract, err := NewMain(contractAddress, client)
+  contract, err := optimismBridge.NewOptimismBridge(contractAddress, client)
   if err != nil {
       log.Fatal(err)
   }
@@ -89,7 +91,7 @@ func connectWallet(privateKeyString string, client *ethclient.Client, chainID *b
 
 }
 
-func getOwner(contract *Main) (storedData common.Address) {
+func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Address) {
 
   storedData, err := contract.Owner(&bind.CallOpts{})
   if err != nil {
@@ -99,7 +101,7 @@ func getOwner(contract *Main) (storedData common.Address) {
 
 }
 
-func OwnerAddBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *Main) {
+func OwnerAddBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
