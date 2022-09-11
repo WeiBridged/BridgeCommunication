@@ -39,13 +39,9 @@ which would revert the unlock function call .
         cd GoerliBridgeToOptimism
         gvm use go1.1sss7
 
-### Owner Deposit
+### Owner Deposit Optimism
 
-        go run ownerDeposit1000wei.go GoerliBridge.go
-
-### Owner Withdraw :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
-
-        go run ownerWithdraw1000wei.go GoerliBridge.go
+        go run ownerDeposit1000wei.go OptimismBridge.go
 
 ### User Lock Goerli :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
 
@@ -53,4 +49,8 @@ which would revert the unlock function call .
 
 ### Owner Unlock Optimism :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
 
-        go run ownerUnlock1000wei.go GoerliBridge.go
+        go run ownerUnlock1000wei.go OptimismBridge.go
+
+### Owner Withdraw :red_circle: NEED TO ADD CROSS CHAIN CHECKS LOCALLY! :red_circle:
+
+        go run ownerWithdraw1000wei.go OptimismBridge.go
