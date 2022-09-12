@@ -88,24 +88,6 @@ func main() {
          UserInQueue := getUserInQueue(Last,contractCrossChain)
          fmt.Println("UserInQueue:", UserInQueue)
 
-         UserBridgedTokens := getOptimismBridgedETH(contract,UserInQueue)
-         fmt.Println("UserBridgedTokens:", UserBridgedTokens)
-
-         UserLockedTokens := getUserLockedTokens(UserInQueue,contractCrossChain)
-         fmt.Println("UserLockedTokens:", UserLockedTokens)
-
-         // // Optional since queue would be empty anyway at this point.
-         // if  UserBridgedTokens.Cmp(UserLockedTokens) > -1 {
-         //   log.Fatal("USER GIVEN ALL BRIDGE FUNDS ALREADY!")
-         // }
-
-
-         //1000 wei at a time to keep the queue balanced.
-         UserTokensToPay := big.NewInt(0).Sub(UserLockedTokens, UserBridgedTokens)
-         // UserTokensToPay := big.NewInt(1000)
-
-         fmt.Println("UserTokensToPay:", UserTokensToPay)
-
          ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
          if err != nil {
            log.Fatal(err)
@@ -113,17 +95,11 @@ func main() {
 
          fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
 
-         if  ContractBridgeTokens.Cmp(UserTokensToPay) == -1 {
-           // log.Fatal("BRIDGE DOES NOT HAVE ENOUGH FUNDS TO BRIDGE USER!")
-           fmt.Println("BRIDGE DOES NOT HAVE ENOUGH FUNDS TO BRIDGE USER!", Last)
-           continue
-         }
-
          DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
 
          time.Sleep(15 * time.Second)
 
-         OwnerUnlockOptimismETHTx(UserInQueue,UserLockedTokens,client,auth,fromAddress,contract);
+         OwnerUnlockOptimismETHTx(UserInQueue,client,auth,fromAddress,contract);
 
          // fmt.Println(block.Hash().Hex())        // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
          // fmt.Println(block.Time().Uint64())     // 1529525947
@@ -226,16 +202,6 @@ func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Addres
 
 }
 
-func getOptimismBridgedETH(contract *optimismBridge.OptimismBridge, UserInQueue common.Address) (storedData *big.Int) {
-
-  storedData, err := contract.OptimismBridgedETH(&bind.CallOpts{},UserInQueue)
-  if err != nil {
-        log.Fatal(err)
-  }
-  return
-
-}
-
 func getFirst(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
 
   storedData, err := contract.First(&bind.CallOpts{})
@@ -266,17 +232,6 @@ func getUserInQueue(Last *big.Int , contract *goerliBridge.GoerliBridge) (stored
 
 }
 
-func getUserLockedTokens(UserInQueue common.Address, contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
-
-  storedData, err := contract.LockedForOptimismETH(&bind.CallOpts{},UserInQueue)
-  if err != nil {
-        log.Fatal(err)
-  }
-  return
-
-}
-
-
 func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *goerliBridge.GoerliBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
@@ -302,7 +257,7 @@ func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress co
 }
 
 
-func OwnerUnlockOptimismETHTx(queuAddress common.Address , queueAmount *big.Int , client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
+func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -318,7 +273,7 @@ func OwnerUnlockOptimismETHTx(queuAddress common.Address , queueAmount *big.Int 
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
 
-  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress,queueAmount)
+  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress)
   if err != nil {
       log.Fatal(err)
   }
