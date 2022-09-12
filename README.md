@@ -44,6 +44,8 @@ which would revert the unlock function call .
 
 ## GoerliToMumbai
 
+        cd GoerliToMumbai
+
 ### Owner Deposit Optimism
 
         go run ownerDeposit1000wei.go
