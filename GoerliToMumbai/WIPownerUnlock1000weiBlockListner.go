@@ -21,20 +21,21 @@ import (
     "github.com/ethereum/go-ethereum/common"
     "github.com/ethereum/go-ethereum/ethclient"
     "github.com/ethereum/go-ethereum/crypto"
+    "github.com/ethereum/go-ethereum/core/types"
 )
 
 func main() {
 
   // Use this endpoint when you are running your own node on a specific chain (no events)
-  // client, chainID := clientSetup(os.Getenv("http://localhost/8545"))
+  // client, chainID := clientSetup("http://localhost/8545")
 
   // Use this endpoint when you are running your own node on a specific chain (events allowed)
-  // client, chainID := clientSetup(os.Getenv("ws://localhost/8546"))
+  // client, chainID := clientSetup("ws://localhost/8546")
 
   client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
+  contractAddress := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -47,58 +48,67 @@ func main() {
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractAddressCrossChain := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
   contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
-
-
-  First := getFirst(contractCrossChain)
-  fmt.Println("First:", First)
-
-  Last := getLast(contractCrossChain)
-  fmt.Println("Last:", Last)
-
-  if Last.Cmp(First) == -1 {
-    log.Fatal("QUEUE IS EMPTY!")
-  }
-
-  UserInQueue := getUserInQueue(Last,contractCrossChain)
-  fmt.Println("UserInQueue:", UserInQueue)
-
-  UserBridgedTokens := getOptimismBridgedETH(contract,UserInQueue)
-  fmt.Println("UserBridgedTokens:", UserBridgedTokens)
-
-  UserLockedTokens := getUserLockedTokens(UserInQueue,contractCrossChain)
-  fmt.Println("UserLockedTokens:", UserLockedTokens)
-
-  // // Optional since queue would be empty anyway at this point.
-  // if  UserBridgedTokens.Cmp(UserLockedTokens) > -1 {
-  //   log.Fatal("USER GIVEN ALL BRIDGE FUNDS ALREADY!")
-  // }
-
-
-  //1000 wei at a time to keep the queue balanced.
-  UserTokensToPay := big.NewInt(0).Sub(UserLockedTokens, UserBridgedTokens)
-  // UserTokensToPay := big.NewInt(1000)
-
-  fmt.Println("UserTokensToPay:", UserTokensToPay)
-
-  ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
+  //Listen for new blocks.on Goerli to see if queue changed
+  headers := make(chan *types.Header)
+  sub, err := clientCrossChain.SubscribeNewHead(context.Background(), headers)
   if err != nil {
-    log.Fatal(err)
+     log.Fatal(err)
   }
 
-  fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+  for {
+     select {
+     case err := <-sub.Err():
+         log.Fatal(err)
+     case header := <-headers:
+         fmt.Println(header.Hash().Hex()) // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
 
-  if  ContractBridgeTokens.Cmp(UserTokensToPay) == -1 {
-    log.Fatal("BRIDGE DOES NOT HAVE ENOUGH FUNDS TO BRIDGE USER!")
+         block, err := clientCrossChain.BlockByHash(context.Background(), header.Hash())
+         if err != nil {
+             log.Fatal(err)
+         }
+
+         fmt.Println("Goerli Block Number:", block.Number().Uint64())   // 3477413
+
+
+         First := getFirst(contractCrossChain)
+         fmt.Println("First:", First)
+
+         Last := getLast(contractCrossChain)
+         fmt.Println("Last:", Last)
+
+         if Last.Cmp(First) == -1 {
+           // log.Fatal("QUEUE IS EMPTY!")
+           fmt.Println("QUEUE IS EMPTY!", Last)
+           continue
+         }
+
+         UserInQueue := getUserInQueue(Last,contractCrossChain)
+         fmt.Println("UserInQueue:", UserInQueue)
+
+         ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
+         if err != nil {
+           log.Fatal(err)
+         }
+
+         fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+
+         DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
+
+         time.Sleep(15 * time.Second)
+
+         OwnerUnlockOptimismETHTx(UserInQueue,client,auth,fromAddress,contract);
+
+         // fmt.Println(block.Hash().Hex())        // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
+         // fmt.Println(block.Time().Uint64())     // 1529525947
+         // fmt.Println(block.Nonce())             // 130524141876765836
+         // fmt.Println(len(block.Transactions())) // 7
+     }
   }
 
-  DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
 
-  time.Sleep(15 * time.Second)
-
-  OwnerUnlockOptimismETHTx(UserInQueue,UserLockedTokens,client,auth,fromAddress,contract);
 
 }
 
@@ -192,16 +202,6 @@ func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Addres
 
 }
 
-func getOptimismBridgedETH(contract *optimismBridge.OptimismBridge, UserInQueue common.Address) (storedData *big.Int) {
-
-  storedData, err := contract.OptimismBridgedETH(&bind.CallOpts{},UserInQueue)
-  if err != nil {
-        log.Fatal(err)
-  }
-  return
-
-}
-
 func getFirst(contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
 
   storedData, err := contract.First(&bind.CallOpts{})
@@ -232,17 +232,6 @@ func getUserInQueue(Last *big.Int , contract *goerliBridge.GoerliBridge) (stored
 
 }
 
-func getUserLockedTokens(UserInQueue common.Address, contract *goerliBridge.GoerliBridge) (storedData *big.Int) {
-
-  storedData, err := contract.LockedForOptimismETH(&bind.CallOpts{},UserInQueue)
-  if err != nil {
-        log.Fatal(err)
-  }
-  return
-
-}
-
-
 func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *goerliBridge.GoerliBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
@@ -268,7 +257,7 @@ func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress co
 }
 
 
-func OwnerUnlockOptimismETHTx(queuAddress common.Address , queueAmount *big.Int , client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
+func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -284,7 +273,7 @@ func OwnerUnlockOptimismETHTx(queuAddress common.Address , queueAmount *big.Int 
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
 
-  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress,queueAmount)
+  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress)
   if err != nil {
       log.Fatal(err)
   }

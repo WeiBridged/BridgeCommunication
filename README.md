@@ -34,10 +34,15 @@ which would revert the unlock function call .
 
 :warning:
 
+## Golang Version Manager: Use Go 1.17
+
+        gvm use go1.17
+
 ## GoerliBridgeToOptimism
 
-        gvm use go1.1sss7
         cd GoerliBridgeToOptimism
+
+## GoerliToMumbai :red_circle: (WORK IN PROGRESS) :red_circle:
 
 ### Owner Deposit Optimism
 
