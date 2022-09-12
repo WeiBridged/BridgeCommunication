@@ -1,4 +1,4 @@
-# bridgeCommunication
+# BridgeCommunication
 
 Backend scripts to help contracts read and write to each other on different blockchains.
 
