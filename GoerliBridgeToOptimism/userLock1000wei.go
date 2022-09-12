@@ -33,7 +33,7 @@ func main() {
   client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractAddress := common.HexToAddress("0xbe7d33cee356236fc02f09f7ffbb0ab90af237a6")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKeyTwo"),client,chainID)
@@ -41,13 +41,10 @@ func main() {
   Owner := getOwner(contract)
   fmt.Println("Owner:", Owner)
 
-
-
-
   clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
+  contractAddressCrossChain := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
   // contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
 
@@ -158,8 +155,7 @@ func LockTokensForOptimismTx(client *ethclient.Client, auth *bind.TransactOpts, 
   auth.GasPrice = gasPrice
   auth.Value = big.NewInt(1003)     // in wei
 
-  amountBridge := big.NewInt(1000)
-  tx, err := contract.LockTokensForOptimism(auth,amountBridge)
+  tx, err := contract.LockTokensForOptimism(auth)
   if err != nil {
       log.Fatal(err)
   }

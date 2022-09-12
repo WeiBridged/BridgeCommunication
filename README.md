@@ -45,12 +45,6 @@ which would revert the unlock function call .
 
 ### User Lock Goerli
 
-:red_circle: REWRITE CONTRACT SO THAT IT:
-
--ONLY ACCEPTS NEW LOCK IF BRIDGE BALANCE OTHER SIDE CAN HANDLE NEW QUEUE SIZE BY 1 BASED ON CURRENT BALANCE BY 1000 WEI INCREMENTS
-
-:red_circle:
-
         go run userLock1000wei.go
 
 ### Owner Unlock Optimism

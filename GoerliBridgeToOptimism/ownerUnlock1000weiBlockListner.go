@@ -35,7 +35,7 @@ func main() {
   client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0x82Fa8539F40F7317CEd662130d1F98eE1DE687a2")
+  contractAddress := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -48,7 +48,7 @@ func main() {
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xd00FcF4B79D6911F54989280b132aAd21b0d2438")
+  contractAddressCrossChain := common.HexToAddress("0xbe7d33cee356236fc02f09f7ffbb0ab90af237a6")
   contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
   //Listen for new blocks.on Goerli to see if queue changed

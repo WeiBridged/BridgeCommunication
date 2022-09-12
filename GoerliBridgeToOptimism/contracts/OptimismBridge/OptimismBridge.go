@@ -30,8 +30,8 @@ var (
 
 // OptimismBridgeMetaData contains all meta data concerning the OptimismBridge contract.
 var OptimismBridgeMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"bridgeEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"bridgeOnOtherSideNeedsLiqudity\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"msgValueDoesNotCoverFee\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"msgValueLessThan1000\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"msgValueZero\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"notExternalBridge\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"notOwnerAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"queueIsEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"queueNotEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"dequeue\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"first\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"last\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"bridgeAmount\",\"type\":\"uint256\"}],\"name\":\"lockTokensForGoerli\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"lockedForGoerliETH\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"optimismBridgedETH\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ownerAddBridgeLiqudity\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ownerRemoveBridgeLiqudity\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userToBridge\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"lockedForOptimismETH\",\"type\":\"uint256\"}],\"name\":\"ownerUnlockOptimismETH\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"queue\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
-	Bin: "0x60a0604052600160045534801561001557600080fd5b503373ffffffffffffffffffffffffffffffffffffffff1660808173ffffffffffffffffffffffffffffffffffffffff1681525050608051610c3561008f60003960008181610258015281816103170152818161038c0152818161044d01528181610564015281816106a601526107100152610c356000f3fe60806040526004361061009c5760003560e01c8063b4a99a4e11610064578063b4a99a4e1461012f578063c5aaccf71461015a578063c637aa9714610197578063cfd121e6146101b3578063ddf0b009146101dc578063e3d66f68146102195761009c565b806308dd057a146100a15780633df4ddf4146100b857806347799da8146100e35780638521eebe1461010e578063957908d114610118575b600080fd5b3480156100ad57600080fd5b506100b6610256565b005b3480156100c457600080fd5b506100cd61037e565b6040516100da9190610958565b60405180910390f35b3480156100ef57600080fd5b506100f8610384565b6040516101059190610958565b60405180910390f35b61011661038a565b005b34801561012457600080fd5b5061012d61044b565b005b34801561013b57600080fd5b50610144610562565b60405161015191906109b4565b60405180910390f35b34801561016657600080fd5b50610181600480360381019061017c9190610a00565b610586565b60405161018e9190610958565b60405180910390f35b6101b160048036038101906101ac9190610a59565b61059e565b005b3480156101bf57600080fd5b506101da60048036038101906101d59190610a86565b61070e565b005b3480156101e857600080fd5b5061020360048036038101906101fe9190610a59565b610884565b60405161021091906109b4565b60405180910390f35b34801561022557600080fd5b50610240600480360381019061023b9190610a00565b6108b7565b60405161024d9190610958565b60405180910390f35b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146102db576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60004703610315576040517f7a1f291700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166108fc479081150290604051600060405180830381858888f1935050505015801561037b573d6000803e3d6000fd5b50565b60045481565b60035481565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff161461040f576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60003403610449576040517f0cdb5d8500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146104d0576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b600454600354101561050e576040517f5e61bb8700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60026000600454815260200190815260200160002060006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556001600460008282546105599190610af5565b92505081905550565b7f000000000000000000000000000000000000000000000000000000000000000081565b60016020528060005260406000206000915090505481565b6103e88110156105da576040517fa9f2d61800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6103e8816103eb6105eb9190610b29565b6105f59190610b9a565b341461062d576040517f400f9fb800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6103eb346103e861063e9190610b29565b6106489190610b9a565b6000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008282546106959190610af5565b925050819055506106a46108cf565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166108fc349081150290604051600060405180830381858888f1935050505015801561070a573d6000803e3d6000fd5b5050565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610793576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6000600160008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054826107e09190610bcb565b905080600160008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008282546108319190610af5565b925050819055508273ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f1935050505015801561087e573d6000803e3d6000fd5b50505050565b60026020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60006020528060005260406000206000915090505481565b6001600360008282546108e29190610af5565b925050819055503360026000600354815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b6000819050919050565b6109528161093f565b82525050565b600060208201905061096d6000830184610949565b92915050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061099e82610973565b9050919050565b6109ae81610993565b82525050565b60006020820190506109c960008301846109a5565b92915050565b600080fd5b6109dd81610993565b81146109e857600080fd5b50565b6000813590506109fa816109d4565b92915050565b600060208284031215610a1657610a156109cf565b5b6000610a24848285016109eb565b91505092915050565b610a368161093f565b8114610a4157600080fd5b50565b600081359050610a5381610a2d565b92915050565b600060208284031215610a6f57610a6e6109cf565b5b6000610a7d84828501610a44565b91505092915050565b60008060408385031215610a9d57610a9c6109cf565b5b6000610aab858286016109eb565b9250506020610abc85828601610a44565b9150509250929050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b6000610b008261093f565b9150610b0b8361093f565b9250828201905080821115610b2357610b22610ac6565b5b92915050565b6000610b348261093f565b9150610b3f8361093f565b9250828202610b4d8161093f565b91508282048414831517610b6457610b63610ac6565b5b5092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b6000610ba58261093f565b9150610bb08361093f565b925082610bc057610bbf610b6b565b5b828204905092915050565b6000610bd68261093f565b9150610be18361093f565b9250828203905081811115610bf957610bf8610ac6565b5b9291505056fea264697066735822122031bb092eacd12b8ec7655d3c2fa02f011add28bb4f697f15aea395cedf2cb20364736f6c63430008110033",
+	ABI: "[{\"inputs\":[],\"name\":\"bridgeEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"bridgeOnOtherSideNeedsLiqudity\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"bridgedAlready\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"msgValueNot1003\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"msgValueZero\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"notExternalBridge\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"notOwnerAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ownerBridgeUsersBeforeWithdraw\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"queueIsEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"queueNotEmpty\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"dequeue\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"lockTokensForOptimism\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ownerAddBridgeLiqudity\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ownerRemoveBridgeLiqudity\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userToBridge\",\"type\":\"address\"}],\"name\":\"ownerUnlockGoerliETH\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"first\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"last\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"Owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"queue\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	Bin: "0x60a0604052600160025534801561001557600080fd5b503373ffffffffffffffffffffffffffffffffffffffff1660808173ffffffffffffffffffffffffffffffffffffffff16815250506080516108e161008f600039600081816101b601528181610275015281816102de015281816103fe0152818161046701528181610528015261063e01526108e16000f3fe6080604052600436106100865760003560e01c80634e22d208116100595780634e22d208146101215780638521eebe1461012b578063957908d114610135578063b4a99a4e1461014c578063ddf0b0091461017757610086565b806308dd057a1461008b57806315b5cbdf146100a25780633df4ddf4146100cb57806347799da8146100f6575b600080fd5b34801561009757600080fd5b506100a06101b4565b005b3480156100ae57600080fd5b506100c960048036038101906100c49190610764565b6102dc565b005b3480156100d757600080fd5b506100e06103ad565b6040516100ed91906107aa565b60405180910390f35b34801561010257600080fd5b5061010b6103b3565b60405161011891906107aa565b60405180910390f35b6101296103b9565b005b610133610465565b005b34801561014157600080fd5b5061014a610526565b005b34801561015857600080fd5b5061016161063c565b60405161016e91906107d4565b60405180910390f35b34801561018357600080fd5b5061019e6004803603810190610199919061081b565b610660565b6040516101ab91906107d4565b60405180910390f35b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610239576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60004703610273576040517f7a1f291700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166108fc479081150290604051600060405180830381858888f193505050501580156102d9573d6000803e3d6000fd5b50565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614610361576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b8073ffffffffffffffffffffffffffffffffffffffff166108fc6103e89081150290604051600060405180830381858888f193505050501580156103a9573d6000803e3d6000fd5b5050565b60025481565b60015481565b6103eb34146103f4576040517fa43d860800000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b6103fc610693565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166108fc349081150290604051600060405180830381858888f19350505050158015610462573d6000803e3d6000fd5b50565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146104ea576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60003403610524576040517f0cdb5d8500000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146105ab576040517f1ee8575e00000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b60025460015410156105e9576040517f5e61bb8700000000000000000000000000000000000000000000000000000000815260040160405180910390fd5b600080600254815260200190815260200160002060006101000a81549073ffffffffffffffffffffffffffffffffffffffff02191690556001600260008282546106339190610877565b92505081905550565b7f000000000000000000000000000000000000000000000000000000000000000081565b60006020528060005260406000206000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60018060008282546106a59190610877565b9250508190555033600080600154815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b600080fd5b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061073182610706565b9050919050565b61074181610726565b811461074c57600080fd5b50565b60008135905061075e81610738565b92915050565b60006020828403121561077a57610779610701565b5b60006107888482850161074f565b91505092915050565b6000819050919050565b6107a481610791565b82525050565b60006020820190506107bf600083018461079b565b92915050565b6107ce81610726565b82525050565b60006020820190506107e960008301846107c5565b92915050565b6107f881610791565b811461080357600080fd5b50565b600081359050610815816107ef565b92915050565b60006020828403121561083157610830610701565b5b600061083f84828501610806565b91505092915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b600061088282610791565b915061088d83610791565b92508282019050808211156108a5576108a4610848565b5b9291505056fea2646970667358221220fc71edf8533f14c03ef4c4affdd594fc0bd32b85302c20bb5949066e9f7469dd64736f6c63430008110033",
 }
 
 // OptimismBridgeABI is the input ABI used to generate the binding from.
@@ -294,68 +294,6 @@ func (_OptimismBridge *OptimismBridgeCallerSession) Last() (*big.Int, error) {
 	return _OptimismBridge.Contract.Last(&_OptimismBridge.CallOpts)
 }
 
-// LockedForGoerliETH is a free data retrieval call binding the contract method 0xe3d66f68.
-//
-// Solidity: function lockedForGoerliETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeCaller) LockedForGoerliETH(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
-	var out []interface{}
-	err := _OptimismBridge.contract.Call(opts, &out, "lockedForGoerliETH", arg0)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// LockedForGoerliETH is a free data retrieval call binding the contract method 0xe3d66f68.
-//
-// Solidity: function lockedForGoerliETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeSession) LockedForGoerliETH(arg0 common.Address) (*big.Int, error) {
-	return _OptimismBridge.Contract.LockedForGoerliETH(&_OptimismBridge.CallOpts, arg0)
-}
-
-// LockedForGoerliETH is a free data retrieval call binding the contract method 0xe3d66f68.
-//
-// Solidity: function lockedForGoerliETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeCallerSession) LockedForGoerliETH(arg0 common.Address) (*big.Int, error) {
-	return _OptimismBridge.Contract.LockedForGoerliETH(&_OptimismBridge.CallOpts, arg0)
-}
-
-// OptimismBridgedETH is a free data retrieval call binding the contract method 0xc5aaccf7.
-//
-// Solidity: function optimismBridgedETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeCaller) OptimismBridgedETH(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
-	var out []interface{}
-	err := _OptimismBridge.contract.Call(opts, &out, "optimismBridgedETH", arg0)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// OptimismBridgedETH is a free data retrieval call binding the contract method 0xc5aaccf7.
-//
-// Solidity: function optimismBridgedETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeSession) OptimismBridgedETH(arg0 common.Address) (*big.Int, error) {
-	return _OptimismBridge.Contract.OptimismBridgedETH(&_OptimismBridge.CallOpts, arg0)
-}
-
-// OptimismBridgedETH is a free data retrieval call binding the contract method 0xc5aaccf7.
-//
-// Solidity: function optimismBridgedETH(address ) view returns(uint256)
-func (_OptimismBridge *OptimismBridgeCallerSession) OptimismBridgedETH(arg0 common.Address) (*big.Int, error) {
-	return _OptimismBridge.Contract.OptimismBridgedETH(&_OptimismBridge.CallOpts, arg0)
-}
-
 // Queue is a free data retrieval call binding the contract method 0xddf0b009.
 //
 // Solidity: function queue(uint256 ) view returns(address)
@@ -408,25 +346,25 @@ func (_OptimismBridge *OptimismBridgeTransactorSession) Dequeue() (*types.Transa
 	return _OptimismBridge.Contract.Dequeue(&_OptimismBridge.TransactOpts)
 }
 
-// LockTokensForGoerli is a paid mutator transaction binding the contract method 0xc637aa97.
+// LockTokensForOptimism is a paid mutator transaction binding the contract method 0x4e22d208.
 //
-// Solidity: function lockTokensForGoerli(uint256 bridgeAmount) payable returns()
-func (_OptimismBridge *OptimismBridgeTransactor) LockTokensForGoerli(opts *bind.TransactOpts, bridgeAmount *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.contract.Transact(opts, "lockTokensForGoerli", bridgeAmount)
+// Solidity: function lockTokensForOptimism() payable returns()
+func (_OptimismBridge *OptimismBridgeTransactor) LockTokensForOptimism(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _OptimismBridge.contract.Transact(opts, "lockTokensForOptimism")
 }
 
-// LockTokensForGoerli is a paid mutator transaction binding the contract method 0xc637aa97.
+// LockTokensForOptimism is a paid mutator transaction binding the contract method 0x4e22d208.
 //
-// Solidity: function lockTokensForGoerli(uint256 bridgeAmount) payable returns()
-func (_OptimismBridge *OptimismBridgeSession) LockTokensForGoerli(bridgeAmount *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.Contract.LockTokensForGoerli(&_OptimismBridge.TransactOpts, bridgeAmount)
+// Solidity: function lockTokensForOptimism() payable returns()
+func (_OptimismBridge *OptimismBridgeSession) LockTokensForOptimism() (*types.Transaction, error) {
+	return _OptimismBridge.Contract.LockTokensForOptimism(&_OptimismBridge.TransactOpts)
 }
 
-// LockTokensForGoerli is a paid mutator transaction binding the contract method 0xc637aa97.
+// LockTokensForOptimism is a paid mutator transaction binding the contract method 0x4e22d208.
 //
-// Solidity: function lockTokensForGoerli(uint256 bridgeAmount) payable returns()
-func (_OptimismBridge *OptimismBridgeTransactorSession) LockTokensForGoerli(bridgeAmount *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.Contract.LockTokensForGoerli(&_OptimismBridge.TransactOpts, bridgeAmount)
+// Solidity: function lockTokensForOptimism() payable returns()
+func (_OptimismBridge *OptimismBridgeTransactorSession) LockTokensForOptimism() (*types.Transaction, error) {
+	return _OptimismBridge.Contract.LockTokensForOptimism(&_OptimismBridge.TransactOpts)
 }
 
 // OwnerAddBridgeLiqudity is a paid mutator transaction binding the contract method 0x8521eebe.
@@ -471,23 +409,23 @@ func (_OptimismBridge *OptimismBridgeTransactorSession) OwnerRemoveBridgeLiqudit
 	return _OptimismBridge.Contract.OwnerRemoveBridgeLiqudity(&_OptimismBridge.TransactOpts)
 }
 
-// OwnerUnlockOptimismETH is a paid mutator transaction binding the contract method 0xcfd121e6.
+// OwnerUnlockGoerliETH is a paid mutator transaction binding the contract method 0x15b5cbdf.
 //
-// Solidity: function ownerUnlockOptimismETH(address userToBridge, uint256 lockedForOptimismETH) returns()
-func (_OptimismBridge *OptimismBridgeTransactor) OwnerUnlockOptimismETH(opts *bind.TransactOpts, userToBridge common.Address, lockedForOptimismETH *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.contract.Transact(opts, "ownerUnlockOptimismETH", userToBridge, lockedForOptimismETH)
+// Solidity: function ownerUnlockGoerliETH(address userToBridge) returns()
+func (_OptimismBridge *OptimismBridgeTransactor) OwnerUnlockGoerliETH(opts *bind.TransactOpts, userToBridge common.Address) (*types.Transaction, error) {
+	return _OptimismBridge.contract.Transact(opts, "ownerUnlockGoerliETH", userToBridge)
 }
 
-// OwnerUnlockOptimismETH is a paid mutator transaction binding the contract method 0xcfd121e6.
+// OwnerUnlockGoerliETH is a paid mutator transaction binding the contract method 0x15b5cbdf.
 //
-// Solidity: function ownerUnlockOptimismETH(address userToBridge, uint256 lockedForOptimismETH) returns()
-func (_OptimismBridge *OptimismBridgeSession) OwnerUnlockOptimismETH(userToBridge common.Address, lockedForOptimismETH *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.Contract.OwnerUnlockOptimismETH(&_OptimismBridge.TransactOpts, userToBridge, lockedForOptimismETH)
+// Solidity: function ownerUnlockGoerliETH(address userToBridge) returns()
+func (_OptimismBridge *OptimismBridgeSession) OwnerUnlockGoerliETH(userToBridge common.Address) (*types.Transaction, error) {
+	return _OptimismBridge.Contract.OwnerUnlockGoerliETH(&_OptimismBridge.TransactOpts, userToBridge)
 }
 
-// OwnerUnlockOptimismETH is a paid mutator transaction binding the contract method 0xcfd121e6.
+// OwnerUnlockGoerliETH is a paid mutator transaction binding the contract method 0x15b5cbdf.
 //
-// Solidity: function ownerUnlockOptimismETH(address userToBridge, uint256 lockedForOptimismETH) returns()
-func (_OptimismBridge *OptimismBridgeTransactorSession) OwnerUnlockOptimismETH(userToBridge common.Address, lockedForOptimismETH *big.Int) (*types.Transaction, error) {
-	return _OptimismBridge.Contract.OwnerUnlockOptimismETH(&_OptimismBridge.TransactOpts, userToBridge, lockedForOptimismETH)
+// Solidity: function ownerUnlockGoerliETH(address userToBridge) returns()
+func (_OptimismBridge *OptimismBridgeTransactorSession) OwnerUnlockGoerliETH(userToBridge common.Address) (*types.Transaction, error) {
+	return _OptimismBridge.Contract.OwnerUnlockGoerliETH(&_OptimismBridge.TransactOpts, userToBridge)
 }
