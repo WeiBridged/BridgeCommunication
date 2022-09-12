@@ -71,11 +71,11 @@ func main() {
   // fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
 
   //USED FOR ERC-20 BALANCES.
-  balanceOfBridgeWETH := getBalanceOfBridgeWETH(contractWETH,contractAddress)
-  fmt.Println("Bridge WETH Balance:", balanceOfBridgeWETH)
+  balanceBridgeWETH := getBalanceOfBridgeWETH(contractWETH,contractAddress)
+  fmt.Println("Bridge WETH Balance:", balanceBridgeWETH)
 
   BigInt0 := big.NewInt(0)
-  if  balanceOfBridgeWETH.Cmp(BigInt0) == 0 {
+  if  balanceBridgeWETH.Cmp(BigInt0) == 0 {
     log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT!!")
   }
 
