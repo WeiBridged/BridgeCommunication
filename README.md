@@ -42,7 +42,7 @@ which would revert the unlock function call .
 
         cd GoerliBridgeToOptimism
 
-## GoerliToMumbai :red_circle: (WORK IN PROGRESS) :red_circle:
+## GoerliToMumbai
 
 ### Owner Deposit Optimism
 
