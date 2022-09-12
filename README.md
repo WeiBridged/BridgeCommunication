@@ -44,7 +44,7 @@ which would revert the unlock function call .
 
 ## GoerliToMumbai
 
-        cd GoerliToMumbai
+        cd GoerliBridgeToMumbai
 
 ### Owner Deposit Optimism
 
