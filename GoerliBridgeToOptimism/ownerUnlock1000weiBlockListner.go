@@ -48,7 +48,7 @@ func main() {
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xbe7d33cee356236fc02f09f7ffbb0ab90af237a6")
+  contractAddressCrossChain := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
   contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
   //Listen for new blocks.on Goerli to see if queue changed

@@ -44,7 +44,7 @@ func main() {
   clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xbe7d33cee356236fc02f09f7ffbb0ab90af237a6")
+  contractAddressCrossChain := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
   contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
   First := getFirst(contractCrossChain)

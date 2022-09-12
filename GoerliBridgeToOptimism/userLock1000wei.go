@@ -33,7 +33,7 @@ func main() {
   client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xbe7d33cee356236fc02f09f7ffbb0ab90af237a6")
+  contractAddress := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKeyTwo"),client,chainID)
