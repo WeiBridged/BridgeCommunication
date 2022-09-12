@@ -13,8 +13,9 @@ import (
     "crypto/ecdsa"
     "math/big"
 
+    weth "testProject/contracts/WETH"
     goerliBridge "testProject/contracts/GoerliBridge"
-    optimismBridge "testProject/contracts/OptimismBridge"
+    mumbaiBridge "testProject/contracts/MumbaiBridge"
 
     "github.com/ethereum/go-ethereum/accounts/abi/bind"
     "github.com/ethereum/go-ethereum/common"
@@ -30,10 +31,13 @@ func main() {
   // Use this endpoint when you are running your own node on a specific chain (events allowed)
   // client, chainID := clientSetup("ws://localhost/8546")
 
-  client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
+  client, chainID := clientSetup(os.Getenv("mumbaiQuicknodeWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
+  contractAddressWETH := common.HexToAddress("0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa")
+  contractWETH := connectContractAddressWETH(client,contractAddressWETH)
+
+  contractAddress := common.HexToAddress("0xb7307DDD7C370A309DB38243258318CbB5E1860C")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -44,7 +48,7 @@ func main() {
   clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
+  contractAddressCrossChain := common.HexToAddress("0xe33EE68Fc5477Ea95F4897b67d3E763b7F74FC52")
   contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
   First := getFirst(contractCrossChain)
@@ -53,19 +57,25 @@ func main() {
   Last := getLast(contractCrossChain)
   fmt.Println("Last:", Last)
 
-  if Last.Cmp(First) > -1 {
-    log.Fatal("QUEUE IS NOT EMPTY!")
-  }
+  // if Last.Cmp(First) > -1 {
+  //   log.Fatal("QUEUE IS NOT EMPTY!")
+  // }
 
-  ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
-  if err != nil {
-    log.Fatal(err)
-  }
 
-  fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+  // User for MSG.VALUE
+  // ContractBridgeTokens, err := client.BalanceAt(context.Background(), contractAddress, nil)
+  // if err != nil {
+  //   log.Fatal(err)
+  // }
+  //
+  // fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
+
+  //USED FOR ERC-20 BALANCES.
+  balanceOfBridgeWETH := getBalanceOfBridgeWETH(contractWETH,contractAddress)
+  fmt.Println("Bridge WETH Balance:", balanceOfBridgeWETH)
 
   BigInt0 := big.NewInt(0)
-  if  ContractBridgeTokens.Cmp(BigInt0) == 0 {
+  if  balanceOfBridgeWETH.Cmp(BigInt0) == 0 {
     log.Fatal("BRIDGE DOES NOT HAVE ANY FUNDS LEFT!!")
   }
 
@@ -89,9 +99,18 @@ func clientSetup(wssConnectionURL string) (client *ethclient.Client, chainID *bi
   return
 }
 
-func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *optimismBridge.OptimismBridge) {
+func connectContractAddress(client *ethclient.Client, contractAddress common.Address) (contract *mumbaiBridge.MumbaiBridge) {
 
-  contract, err := optimismBridge.NewOptimismBridge(contractAddress, client)
+  contract, err := mumbaiBridge.NewMumbaiBridge(contractAddress, client)
+  if err != nil {
+      log.Fatal(err)
+  }
+  return
+}
+
+func connectContractAddressWETH(client *ethclient.Client, contractAddress common.Address) (contract *weth.Weth) {
+
+  contract, err := weth.NewWeth(contractAddress, client)
   if err != nil {
       log.Fatal(err)
   }
@@ -122,7 +141,7 @@ func connectWallet(privateKeyString string, client *ethclient.Client, chainID *b
 
 }
 
-func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Address) {
+func getOwner(contract *mumbaiBridge.MumbaiBridge) (storedData common.Address) {
 
   storedData, err := contract.Owner(&bind.CallOpts{})
   if err != nil {
@@ -132,7 +151,17 @@ func getOwner(contract *optimismBridge.OptimismBridge) (storedData common.Addres
 
 }
 
-func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
+func getBalanceOfBridgeWETH(contract *weth.Weth, bridgeAddress common.Address) (storedData *big.Int) {
+
+  storedData, err := contract.BalanceOf(&bind.CallOpts{},bridgeAddress)
+  if err != nil {
+        log.Fatal(err)
+  }
+  return
+
+}
+
+func OwnerRemoveBridgeLiqudityTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *mumbaiBridge.MumbaiBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
