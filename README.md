@@ -49,12 +49,6 @@ which would revert the unlock function call .
 
 ### Owner Unlock Optimism
 
-:red_circle: REWRITE CONTRACT SO THAT IT:
-
--ONLY SENDS 1000 WEI PER QUEUE TO AVOID ISSUE WITH BALANCE AND QUEUE BEING OUT OF SYNC
-
-:red_circle:
-
         go run ownerUnlock1000weiBlockListner.go
 
 ### Owner Withdraw
