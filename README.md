@@ -2,6 +2,24 @@
 
 Backend scripts to help contracts read and write to each other on different blockchains.
 
+## Connecting to Networks 
+
+The following network endpoint types were used:
+
+### Goerli
+
+-Local node synced (Prysm and Geth post merge)
+
+-Infura WSS
+
+### Mumbai
+
+-Alchemy WSS
+
+### Mumbai
+
+-Quicknode WSS
+
 ## General Overview
 
 1. Owner adds 1000 wei [ETH] (or another token) to another side of a bridge
