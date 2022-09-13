@@ -12,7 +12,7 @@ The following network endpoint types were used:
 
 -Infura WSS
 
-### Mumbai
+### Optimism
 
 -Alchemy WSS
 
