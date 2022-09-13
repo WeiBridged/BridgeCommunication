@@ -64,15 +64,15 @@ which would revert the unlock function call .
 
         cd GoerliBridgeToMumbai
 
-### Owner Deposit Optimism
+### Owner Deposit 
 
         go run ownerDeposit1000wei.go
 
-### User Lock Goerli
+### User Lock
 
         go run userLock1000wei.go
 
-### Owner Unlock Optimism
+### Owner Unlock
 
         go run ownerUnlock1000weiBlockListner.go
 
