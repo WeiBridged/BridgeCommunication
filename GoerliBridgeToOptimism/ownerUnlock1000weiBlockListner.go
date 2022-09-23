@@ -37,16 +37,11 @@ func main() {
   Owner := getOwner(contract)
   fmt.Println("storedData:", Owner)
 
-  // Use this endpoint when you are running your own node on a specific chain (no events)
-  // client, chainID := clientSetup("http://localhost/8545")
-
-  // Use this endpoint when you are running your own node on a specific chain (events allowed)
-  // client, chainID := clientSetup("ws://localhost/8546")
-
   // clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   // fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  clientCrossChain, chainIDCrossChain := clientSetup("ws://localhost/8546")
+  // Use this endpoint when you are running your own node on a specific chain (events allowed)
+  clientCrossChain, chainIDCrossChain := clientSetup("ws://localhost:8546")
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
