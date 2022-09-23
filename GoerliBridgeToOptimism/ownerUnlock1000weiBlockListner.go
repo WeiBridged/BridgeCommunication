@@ -95,11 +95,11 @@ func main() {
 
          DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
 
-         time.Sleep(15 * time.Second)
+         time.Sleep(30 * time.Second)
 
          OwnerUnlockOptimismETHTx(UserInQueue,client,auth,fromAddress,contract);
 
-         time.Sleep(15 * time.Second)
+         time.Sleep(30 * time.Second)
 
 
 
