@@ -30,7 +30,10 @@ func main() {
   // Use this endpoint when you are running your own node on a specific chain (events allowed)
   // client, chainID := clientSetup("ws://localhost/8546")
 
-  client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
+  // client, chainID := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
+  // fmt.Println("chainID: ", chainID)
+
+  client, chainID := clientSetup("ws://localhost/8546")
   fmt.Println("chainID: ", chainID)
 
   contractAddress := common.HexToAddress("0xaED1aC1429EAB4569e218b2aD1A585146fCdE061")
