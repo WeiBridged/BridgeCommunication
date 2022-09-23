@@ -257,7 +257,7 @@ func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress co
 }
 
 
-func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *mumbaiBridge.MumbaiBridge) {
+func OwnerUnlockOptimismETHTx(queueAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *mumbaiBridge.MumbaiBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -273,7 +273,7 @@ func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Clie
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
 
-  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress)
+  tx, err := contract.OwnerUnlockOptimismETH(auth,queueAddress)
   if err != nil {
       log.Fatal(err)
   }

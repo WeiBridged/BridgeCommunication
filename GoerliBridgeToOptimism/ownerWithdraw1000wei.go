@@ -27,7 +27,7 @@ func main() {
   client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
+  contractAddress := common.HexToAddress("0x430e0d957313D454c9B2496dc1F27D06Ea617CaE")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)

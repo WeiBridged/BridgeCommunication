@@ -42,7 +42,7 @@ func main() {
   clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  contractAddressCrossChain := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
+  contractAddressCrossChain := common.HexToAddress("0x430e0d957313D454c9B2496dc1F27D06Ea617CaE")
   // contractCrossChain := connectContractAddressCrossChain(clientCrossChain,contractAddressCrossChain)
 
 

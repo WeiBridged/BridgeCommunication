@@ -29,7 +29,7 @@ func main() {
   client, chainID := clientSetup(os.Getenv("optimismAlchemyWSS"))
   fmt.Println("chainID: ", chainID)
 
-  contractAddress := common.HexToAddress("0xf5f1e4510B7c1645491285eBb9F762E371884B45")
+  contractAddress := common.HexToAddress("0x430e0d957313D454c9B2496dc1F27D06Ea617CaE")
   contract := connectContractAddress(client,contractAddress)
 
   auth, fromAddress := connectWallet(os.Getenv("devTestnetPrivateKey"),client,chainID)
@@ -40,8 +40,8 @@ func main() {
   // clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   // fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  // Use this endpoint when you are running your own node on a specific chain (no events)
-  clientCrossChain, chainIDCrossChain := clientSetup("http://localhost:8545")
+  // Use this endpoint when you are running your own node on a specific chain (events allowed)
+  clientCrossChain, chainIDCrossChain := clientSetup("ws://localhost:8546")
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
@@ -93,13 +93,14 @@ func main() {
 
          fmt.Println("ContractBridgeTokens", ContractBridgeTokens) // 25893180161173005034
 
+         DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
+
+         time.Sleep(15 * time.Second)
+
          OwnerUnlockOptimismETHTx(UserInQueue,client,auth,fromAddress,contract);
 
          time.Sleep(15 * time.Second)
 
-         DequeueTx(clientCrossChain,authCrossChain,fromAddress,contractCrossChain);
-
-         time.Sleep(15 * time.Second)
 
 
          // fmt.Println(block.Hash().Hex())        // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
@@ -258,7 +259,7 @@ func DequeueTx(client *ethclient.Client, auth *bind.TransactOpts, fromAddress co
 }
 
 
-func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
+func OwnerUnlockOptimismETHTx(queueAddress common.Address, client *ethclient.Client, auth *bind.TransactOpts, fromAddress common.Address, contract *optimismBridge.OptimismBridge) {
 
   gasPrice, err := client.SuggestGasPrice(context.Background())
   if err != nil {
@@ -274,7 +275,7 @@ func OwnerUnlockOptimismETHTx(queuAddress common.Address, client *ethclient.Clie
   auth.GasLimit = uint64(300000) // in units
   auth.GasPrice = gasPrice
 
-  tx, err := contract.OwnerUnlockOptimismETH(auth,queuAddress)
+  tx, err := contract.OwnerUnlockOptimismETH(auth,queueAddress)
   if err != nil {
       log.Fatal(err)
   }
