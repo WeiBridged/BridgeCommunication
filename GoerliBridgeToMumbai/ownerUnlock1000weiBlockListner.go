@@ -41,19 +41,12 @@ func main() {
   Owner := getOwner(contract)
   fmt.Println("storedData:", Owner)
 
-  // Use this endpoint when you are running your own node on a specific chain (no events)
-  // client, chainID := clientSetup("http://localhost/8545")
-
-  // Use this endpoint when you are running your own node on a specific chain (events allowed)
-  // client, chainID := clientSetup("ws://localhost/8546")
-
   // clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("goerliWebSocketSecureEventsInfuraAPIKey"))
   // fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
 
-  clientCrossChain, chainIDCrossChain := clientSetup(os.Getenv("ws://localhost/8546""))
+  // Use this endpoint when you are running your own node on a specific chain (events allowed)
+  clientCrossChain, chainIDCrossChain := clientSetup("ws://localhost:8546")
   fmt.Println("chainIDCrossChain: ", chainIDCrossChain)
-
-
 
   authCrossChain, fromAddress := connectWalletCrossChain(os.Getenv("devTestnetPrivateKey"),clientCrossChain,chainIDCrossChain)
 
@@ -105,6 +98,8 @@ func main() {
          time.Sleep(15 * time.Second)
 
          OwnerUnlockOptimismETHTx(UserInQueue,client,auth,fromAddress,contract);
+
+         time.Sleep(15 * time.Second)
 
          // fmt.Println(block.Hash().Hex())        // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
          // fmt.Println(block.Time().Uint64())     // 1529525947
